@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Express</h1>
+    <h2><b>Using middleware</b></h2>
+
+    <p>Express is a routing and middleware web framework that has minimal functionality of its own 
+    .An express application is essentially a series of middleware function calls. 
+    </p>
+
+    <p> <b> Middleware </b>functions are functions that have access to the request object(req), the response object
+        (res), and the next middleware function in the application's request- response cycle
+    </p>
+
+    <p>
+        Middleware functions can perform the following tasks: 
+    </p>
+
+    <ul>
+        <li>Execute any code</li>
+        <li>Make changes to the request and the response objects</li>
+        <li>End the request-response cycle</li>
+        <li>Call the next middleware function in the stark</li>
+    </ul>
+
+    <p>
+        If the current middleware function does not end the request-response cycle, it must call a ext() to pass control to the next middleware function.
+        Otherwise, the request will be left hanging. 
+    </p>
+    
+    <ul>
+        <p>
+            An express application can use the following types of middleware: 
+        </p>
+
+        <li>
+            <a href = "#middleware.application" class = "active">Application-level middleware</a> 
+        </li>
+        <li> <a href="#middleware.router">Router-level middleware</a></li>
+        <li> <a href="#middleware.error-handling" class="active">Error-handling middleware</a></li>
+        <li> <a href="#middleware.built-in" class="active">Built-in middleware</a></li>
+        <li> <a href="#middleware.third-party" class="active">Third-party middleware</a></li>
+    </ul>
+
+    <p>
+        You can load application-level and router-level middleware with an optional mount path.
+        You can also load a series of middleware functions together, which creates a sub-stack of the middleware system at a mount point. 
+    </p>
+
+    <h2> <b>Application-level middleware </b></h2>
+
+    <div>
+        <p>Bind application-level middleware to an instance of the app.object by using the
+            <code>app.use() </code>and <code>app.METHOD()</code> functions,
+            where <code>METHOD</code> is the HTTP method of the request that the middleware function handles (such as GET, PUT or POST) in lowercase. 
+        </p>
+
+        <p>
+            This example shows a middleware function with no mount path. The function is excutes every time the app receives a request. 
+        </p>
+    </div>
+
+    <div>
+        <p>
+            <code>const express = require('express');<br></code> 
+            <code>const app = express();<br></code> 
+
+            <code>app.use((req, res, next) => {<br></code>
+            <code>    console.log("Time :"Date.now());<br></code> 
+            <code>    next(); <br></code>
+            <code>});<br></code> 
+        </p>
+    </div>
+
+    <div>
+        <p>This example shows a middleware function mounted on the /user/:id path. 
+            The function is excutes for any type of HTTP request on the /user/:id path 
+        </p>
+    </div>
+
+    <div>
+        <p>
+            This example shows a route and its handler function (middleware system). The function handles GET requests to the /user/:id path. 
+        </p>
+    </div>
+
+    <div>
+        <p>Here is an example of loading a series of middleware functions at a mount poin, 
+            with a mount path. It illustrates a middleware sub-stack that prints request info for any type of HTTP request to the /user/:id path. 
+        </p>
+    </div>
+
+
+    <div>
+        <p>Route handlers enable you to define multiple routes for a path.
+            The example below defines two routes for GET requests to the /user/:id path.
+            The second route will not cause any problems, but it will never get called because the first route ends the request-response cycle.
+        </p>
+        <small>This example shows a middleware sub-stack that handles GET requests to the /user/:id path.</small>
+    </div>
+
+    <div>
+        <p>
+            To skip the rest of the middleware functions from a router middleware stack, call next('route') to pass control to the next route.
+            <b>NOTE</b>: next('route') will work only in middleware functions that were loaded by using the app.METHOD() or router.METHOD() functions. 
+        </p>
+        <small>This example shows a middleware sub-stack that handles GET requests to the /user/:id path.</small>
+    </div>
+
+    <div>
+        <p>Middleware can also be declared in an array for reusability.</p>
+
+        <small>This example shows an array with a middleware sub-stack that handles GET requests to the /user/:id path.</small>
+    </div>
+
+    <h2> <b>Router-level middleware </b></h2>
+    
+    <p>Router-level middleware works in the same way as application-level middleware, except it is bound to an instance of express.Router().</p>
+    <code>const router = express.Router()</code>
+
+    <div>
+        <p>Load router-level middleware by using the router.use() and router.METHOD() functions. </p>
+
+        <small>The following example code replicates the middleware system that shown above for application-level middleware by using router-level middleware:</small>
+    </div>
+
+    <div>
+        <p>To skip the rest of the router's middle sub-stack that handles GET requests to the /user/:id path.</p>
+        <small>This example shows a middleware sub-stack that handles GET requests to the /user/:id path.</small>
+    </div>
+
+    <h2> <b>Error-handling middleware </b></h2>
+
+    <p>Define error-handling middleware functions in the same way as other middleware functions,
+        except with four arguments instead of three, specifically with the signature (err,req, res, next()):
+    </p>
+
+    <div>
+        <code>app.use((err, req, res, next) => {</code>
+        <code>    console.error(err.stack) </code>
+        <code>    res.status(500).send('Something broke!!!');</code>     
+        <code>})</code>
+    </div>
+    <p>For details about error-handling middleware, see <a href="https://expressjs.com/en/guide/error-handling.html">Error handling</a></p>
+
+    <h2>Built-in middleware</h2>
+    <div>
+        <p>
+            Starting with version 4.x. Express no longer depends on <a href="http://">Connect</a>. 
+            The middleware functions that were previously included with Express are now in separate modules, 
+            see <a href="http://">the list of middleware functions</a>.
+        </p>
+
+        <p>Express has the following built-in middleware functions: </p>
+        <ul>
+            <li><a href="">express.static</a> serves static assets such as HTML files, images and so on.</li>
+            <li>
+                <a href="http://">express.json</a> parses incoming requests with JSON payloads.
+                <b>NOTE: Available with Express 4.16.0+</b>. 
+            </li>
+            <li>
+                <a href="http://">express.urlencoded</a> parses incoming requests with URL-encoded payloads. 
+                <b>NOTE: Available with Express 4.16.0+</b>
+            </li>
+        </ul>
+    </div>
+    <h2><b>Third-party middleware</b></h2>
+
+    <div>
+        <p>Use third-party middleware to add functionality to Express apps.</p>
+        <p>Install the Node.js module for the required functionality, then load it in your app at the application level or at the router-level.</p>
+        <p>The following example illustrates installing and loading the cookie-parsing middleware function cookie-parser.</p>
+
+        <code>$ npm install cookie-parser</code>
+
+        <p>
+            const express = require('express') <br>
+            const app = express() <br> 
+            const cookieParser = require('cookie-parser') <br>
+
+            // load the cookie-parsing middleware <br>
+            app.use(cookieParser()) <br>
+        </p>
+    </div>
+
+    <footer>
+        <section id = "doc-langs">
+            Documentation translations provided by
+            <a href="http://strongloop.com">StrongLoop/IBM</a>
+            :
+            <a href="/fr/">French</a>
+            ,
+            <a href="/de/">German</a>
+            ,
+            <a href="/es/">Spanish</a>
+            ,
+            <a href="/it/">Italian</a>
+            ,
+            <a href="/ja/">Japanese</a>
+            ,
+            <a href="/ru/">Russian</a>
+            ,
+            <a href="/zh-cn/">Chinese</a>
+            ,
+            <a href="/zh-tw/">Traditional Chinese</a>
+            ,
+            <a href="/ko/">Korean</a>
+            ,
+            <a href="/pt-br/">Portguese</a>
+            .
+            <br>
+            Community translation available for :
+            <a href="/sk/">Slovak</a>
+            ,
+            <a href="/uk/">Ukranian</a>
+            ,
+            <a href="/uz/">Uzbek</a>
+            ,
+            <a href="/tr/">Turkish</a>
+            and
+            <a href="/th/">Thai</a>
+            .
+        </section>
+    </footer>
+</body>
+</html>

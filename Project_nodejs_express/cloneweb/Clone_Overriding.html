@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <Style src = "overriding_css.css"></Style>
+    <title>Document</title>
+</head>
+<body>
+    <h1 class = "h1" >Overriding the Express </h1>
+
+    <div>
+        <p>
+            The Express API consists of various methods and properties on the request and response objects. 
+            These are inherited by prototype. There are two extension points for the Express API 
+        </p>
+        <ol>
+            <li>
+                The global prototypes at express.request and express.response . 
+            </li>
+            <li>
+                App-specific prototypes at app.request and app.reponse .
+            </li>
+        </ol>
+
+        <p>Altering the global protoypes will affest all loaded Express apps in the same process. If desires, alterations can 
+            be made app-specific by only altering the app-specific prototypes after creating a new app. 
+        </p>
+    </div>
+
+    <div>
+        <h2 class = "h2">Methods</h2>
+
+        <p>
+            You can override the signature and behavior of existing methods with your own, by assigning a custiom function. 
+            Following is an example of overriding the behavior of <a href = "http://expressjs.com/en/4x/api.html">res.sendStatus</a> . 
+        </p>
+
+        <pre class = "language - javascript">
+            <code class = "language - javascript">
+                <code>app.response.sendStatus = <code class = "res_sendStatus_line-1">function </code>(statusCode, type, message) {</code>
+                <code class = "res_sendStatus_line-2">code is intentionally kept simple for demonstration purpose</code>
+                <code>      return this.contentType(type).status(statusCode).send(message)</code>
+                <code>}</code>
+            </code>
+        </pre>
+
+        <p>The above implementation completely changes the orginal signature of res.sendStatus. It now accepts a status code, encoding type, and the message to be sent to the client.</p>
+        <p>The overridden method may now be used this way </p>
+        <code>res.sendStatus(404, 'applicationapplication/json', '{"error":"resource not found"}')</code>
+
+    </div>
+
+    <div>
+        <h2 class = "h2">Properties</h2>
+
+        <p>Properties in the Express API are either </p>
+        <ol>
+            <li>Assigned properties (req.baseUrl, req.originalUrl)</li>
+            <li>Defines as getters (req.secure, req.ip)</li>
+        </ol>
+
+        <p>
+            Since properties under category 1 are dynamically assinged on the request and response objects in the context of the current request-response cycle, 
+            their behaviors cannot be overriden. 
+        </p>
+        <p>Properties under category 2 can be overwritten using the Express API extensions API</p>
+        
+    </div>
+</body>
+</html>
