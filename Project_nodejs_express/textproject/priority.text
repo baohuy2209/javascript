@@ -1,0 +1,17 @@
+- Giua Internal va External thi muc do uu tien nhu nhau 
+
+- Giua Inline, id, class, tagname thi muc do uu tien theo thu tu giam dam Inline > id > class > tagname. 
+
+- Khi goi doi tuong mot lan nua thi css lun nhan cai moi nhat 
+
+- "*" select tat ca thuoc tinh trong file html 
+Cho diem cho tat ca thu tu uu tien ta co: 
+Inline : 1000, 
+
+id: 100, 
+
+class: 10 
+
+tag: 1
+
+Universal selector and inherited : 0, nghia la neu nhu select toi may cai tren thi deu theo thuoc tinh cac cai tren. 

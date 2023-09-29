@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../Desktop/javascript"
+		},
+		{
+			"path": "../Desktop/Project_nodejs_express"
+		},
+		{
+			"path": "../Desktop/Project_nodejs_express2"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "javascript"
+	}
+}
