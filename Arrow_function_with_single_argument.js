@@ -1,0 +1,5 @@
+const checkWeight = weight => { 
+    console.log(`Weight : ${weight}`); 
+}; 
+checkWeight(25); // => Weight : 25 
+  
